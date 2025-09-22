@@ -1,0 +1,90 @@
+import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import api from "../services/api";
+import {
+    Box,
+    Typography,
+    Button,
+    Grid,
+    Card,
+    CardMedia,
+    Divider,
+} from "@mui/material";
+
+export default function ProductDetail({ onAdd }) {
+    const { id } = useParams();
+    const [product, setProduct] = useState(null);
+
+    useEffect(() => {
+        api.get(`/producto/buscarid?id=${id}`).then((res) => setProduct(res.data));
+    }, [id]);
+
+    if (!product) return <Typography>Cargando producto...</Typography>;
+
+    return (
+        <Box sx={{ padding: 4 }}>
+            <Grid container spacing={6} alignItems="flex-start">
+                {/* Imagen del producto */}
+                <Grid item xs={12} md={6}>
+                    <CardMedia
+                        component="img"
+                        image={
+                            product.imagenUrl ||
+                            `https://via.placeholder.com/500x500?text=${product.nombre}`
+                        }
+                        alt={product.nombre}
+                        sx={{
+                            objectFit: "cover",
+                            maxHeight: 500,
+                            p: 2,
+                            borderRadius: 2
+                        }}
+                    />
+                </Grid>
+
+
+                <Grid item xs={12} md={6}>
+                    <Typography
+                        variant="h3"
+                        sx={{
+                            fontFamily: "Cinzel, serif",
+                            fontWeight: 700,
+                            color: "#d4af37",
+                            mb: 2,
+                        }}
+                    >
+                        {product.nombre}
+                    </Typography>
+
+                    <Divider sx={{ background: "#d4af37", mb: 2, width: "60%" }} />
+
+                    <Typography variant="h5" sx={{ fontWeight: "bold", mb: 2 }}>
+                        ${product.precio}
+                    </Typography>
+
+                    <Typography variant="body1" sx={{ color: "#ccc", mb: 3 }}>
+                        {product.descripcion || "Sin descripción disponible."}
+                    </Typography>
+
+                    <Button
+                        variant="contained"
+                        size="large"
+                        onClick={() => onAdd(product)}
+                        sx={{
+                            backgroundColor: "#d4af37",
+                            color: "#000",
+                            fontWeight: "bold",
+                            px: 4,
+                            py: 1.5,
+                            "&:hover": {
+                                backgroundColor: "#b7952b",
+                            },
+                        }}
+                    >
+                        Agregar al Carrito
+                    </Button>
+                </Grid>
+            </Grid>
+        </Box>
+    );
+}
