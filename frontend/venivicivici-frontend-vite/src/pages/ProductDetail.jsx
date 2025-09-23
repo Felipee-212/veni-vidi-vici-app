@@ -24,8 +24,8 @@ export default function ProductDetail({ onAdd }) {
     return (
         <Box sx={{ padding: 4 }}>
             <Grid container spacing={6} alignItems="flex-start">
-                {/* Imagen del producto */}
-                <Grid item xs={12} md={6}>
+
+                <Grid item xs={12} md={6} sx={{ minHeight: 400 }}>
                     <CardMedia
                         component="img"
                         image={
@@ -43,7 +43,7 @@ export default function ProductDetail({ onAdd }) {
                 </Grid>
 
 
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} md={6} sx={{ minHeight: 400 }}>
                     <Typography
                         variant="h3"
                         sx={{
@@ -51,6 +51,14 @@ export default function ProductDetail({ onAdd }) {
                             fontWeight: 700,
                             color: "#d4af37",
                             mb: 2,
+                            fontSize: { xs: "1.6rem", md: "2.2rem" },
+                            overflow: "hidden",
+                            display: "-webkit-box",
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: "vertical",
+                            textOverflow: "ellipsis",
+                            lineHeight: 1.2,
+                            maxHeight: "5.5rem",
                         }}
                     >
                         {product.nombre}
@@ -62,7 +70,20 @@ export default function ProductDetail({ onAdd }) {
                         ${product.precio}
                     </Typography>
 
-                    <Typography variant="body1" sx={{ color: "#ccc", mb: 3 }}>
+                    <Typography
+                        variant="body1"
+                        sx={{
+                            color: "#ccc",
+                            mb: 3,
+                            overflow: "hidden",
+                            display: "-webkit-box",
+                            WebkitLineClamp: 2,
+                            WebkitBoxOrient: "vertical",
+                            textOverflow: "ellipsis",
+                            lineHeight: 1.4,
+                            height: "2.8em",
+                        }}
+                    >
                         {product.descripcion || "Sin descripción disponible."}
                     </Typography>
 
